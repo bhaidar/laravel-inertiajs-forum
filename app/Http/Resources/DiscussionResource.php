@@ -12,6 +12,7 @@ class DiscussionResource extends JsonResource
      * Transform the resource into an array.
      *
      * @mixin Discussion
+     *
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
@@ -20,6 +21,8 @@ class DiscussionResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
+            'topic' => TopicResource::make($this->whenLoaded('topic')),
+            'is_pinned' => $this->isPinned(),
         ];
 
     }
