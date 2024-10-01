@@ -1,9 +1,12 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
 import ForumLayout from '@/Layouts/ForumLayout.vue';
+import Post from '@/Components/Forum/Post.vue';
+import Pagination from '@/Components/Forum/Pagination.vue';
 
-const { discussion } = defineProps({
+const { discussion, posts } = defineProps({
     discussion: Object,
+    posts: Object,
 });
 </script>
 
@@ -11,7 +14,7 @@ const { discussion } = defineProps({
     <Head :title="discussion.title" />
 
     <ForumLayout>
-        <div class="space-y-6">
+        <div class="space-y-3">
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="flex items-center space-x-3">
@@ -29,6 +32,11 @@ const { discussion } = defineProps({
                     </div>
                 </div>
             </div>
+
+            <template v-if="posts.data.length">
+                <Post v-for="post in posts.data" :key="post.id" :post="post" />
+                <Pagination :pagination="posts.meta" />
+            </template>
         </div>
 
         <template #side>
