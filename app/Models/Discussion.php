@@ -24,6 +24,27 @@ class Discussion extends Model
         $query->orderBy('pinned_at', 'asc');
     }
 
+    public function scopeOrderByLastPost($query): void
+    {
+        /*
+         * This adds a subquery to the main query in the order claude
+         * It gets the latest post created_at for each discussion and sorts  by it
+         * select *
+         * from `discussions`
+         * order by
+         *    `pinned_at` asc,
+         *	(select `created_at` from `posts` where `posts`.`discussion_id` = `discussions`.`id` order by `created_at` desc limit 1) desc
+         * limit 10
+         * offset 0
+         */
+        $query->orderBy(
+            Post::select('created_at')
+                ->whereColumn('posts.discussion_id', 'discussions.id')
+                ->latest()
+                ->take(1),
+            'desc');
+    }
+
     public function isPinned(): bool
     {
         return ! is_null($this->pinned_at);
