@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Discussion extends Model
@@ -53,5 +54,22 @@ class Discussion extends Model
     {
         return $this->HasOne(Post::class)
             ->whereNull('parent_id');
+    }
+
+    public function latestPost(): HasOne
+    {
+        return $this->HasOne(Post::class)->latestOfMany();
+    }
+
+    public function participants(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            User::class,
+            Post::class,
+            'discussion_id', // Foreign key on Post - How Discussion links to Post
+            'id', // Foreign key on User - How User links to Post
+            'id', //Local key on the
+            'user_id'
+        )->distinct();
     }
 }

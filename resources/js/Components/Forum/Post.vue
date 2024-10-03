@@ -21,7 +21,13 @@ const { post } = defineProps({
                     {{ post.user.username }}
                 </div>
                 <div class="text-sm text-gray-500">
-                    Posted {{ post.created_at.human }}
+                    Posted
+                    <time
+                        :datetime="post.created_at.datetime"
+                        :title="post.created_at.datetime"
+                    >
+                        {{ post.created_at.human }}
+                    </time>
                 </div>
             </div>
             <div class="mt-3">
