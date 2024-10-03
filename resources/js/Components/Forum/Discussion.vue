@@ -39,7 +39,11 @@ const moreParticipants = computed(() => discussion.participants.length - 3);
                         class="mt-3 inline-block text-sm"
                     >
                         Last post by
-                        {{ discussion.latest_post.user.username }} at
+                        {{
+                            discussion.latest_post.user?.username ||
+                            '[user deleted]'
+                        }}
+                        at
                         <time
                             :datetime="
                                 discussion.latest_post.created_at.datetime

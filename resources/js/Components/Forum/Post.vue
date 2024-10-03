@@ -10,6 +10,7 @@ const { post } = defineProps({
     >
         <div class="w-7 flex-shrink-0">
             <img
+                v-if="post.user"
                 :src="post.user.avatar_url"
                 alt=""
                 class="h-7 w-7 rounded-full"
@@ -18,7 +19,7 @@ const { post } = defineProps({
         <div class="w-full">
             <div>
                 <div>
-                    {{ post.user.username }}
+                    {{ post.user?.username || '[user deleted]' }}
                 </div>
                 <div class="text-sm text-gray-500">
                     Posted
