@@ -68,6 +68,11 @@ class Discussion extends Model
         return $this->hasMany(Post::class)->chaperone('discussion');
     }
 
+    public function replies(): HasMany
+    {
+        return $this->hasMany(Post::class)->whereNotNull('parent_id');
+    }
+
     /**
      * First post of this discussion
      */

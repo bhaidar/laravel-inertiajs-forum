@@ -1,6 +1,7 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import pluralize from 'pluralize';
 
 const { discussion } = defineProps({
     discussion: Object,
@@ -58,7 +59,7 @@ const moreParticipants = computed(() => discussion.participants.length - 3);
                     <div class="mt-3 inline-block text-sm">No posts yet!</div>
                 </template>
             </div>
-            <div class="flex-shrink-0">
+            <div class="flex flex-shrink-0 flex-col items-end">
                 <div class="flex items-center justify-start -space-x-1">
                     <img
                         :src="participant.avatar_url"
@@ -73,6 +74,9 @@ const moreParticipants = computed(() => discussion.participants.length - 3);
                         v-if="moreParticipants > 0"
                         >+ {{ moreParticipants }} more
                     </span>
+                </div>
+                <div class="mt-3 text-sm">
+                    {{ pluralize('reply', discussion.replies_count, true) }}
                 </div>
             </div>
         </div>
