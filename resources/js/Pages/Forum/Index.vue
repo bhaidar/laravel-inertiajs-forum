@@ -5,6 +5,7 @@ import Select from '@/Components/Select.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import Discussion from '@/Components/Forum/Discussion.vue';
 import Pagination from '@/Components/Forum/Pagination.vue';
+import Navigation from '@/Components/Forum/Navigation.vue';
 
 const { discussions } = defineProps({
     discussions: Object,
@@ -47,9 +48,7 @@ const { discussions } = defineProps({
         </div>
 
         <template #side>
-            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">Side</div>
-            </div>
+            <Navigation />
         </template>
     </ForumLayout>
 </template>
