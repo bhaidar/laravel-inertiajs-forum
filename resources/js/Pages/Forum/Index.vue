@@ -7,8 +7,9 @@ import Discussion from '@/Components/Forum/Discussion.vue';
 import Pagination from '@/Components/Forum/Pagination.vue';
 import Navigation from '@/Components/Forum/Navigation.vue';
 
-const { discussions } = defineProps({
+const { discussions, query } = defineProps({
     discussions: Object,
+    query: Object,
 });
 </script>
 
@@ -48,7 +49,7 @@ const { discussions } = defineProps({
         </div>
 
         <template #side>
-            <Navigation />
+            <Navigation :query="query" />
         </template>
     </ForumLayout>
 </template>

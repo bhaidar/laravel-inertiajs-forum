@@ -27,6 +27,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "pluralize": "^8.0.0"
+        "pluralize": "^8.0.0",
+        "qs": "^6.13.0"
     }
 }
