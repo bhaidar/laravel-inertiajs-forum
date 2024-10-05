@@ -7,14 +7,17 @@ import Textarea from '@/Components/Textarea.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
 
-const { visible } = useCreateDiscussion();
+const { hideCreateDiscussionForm, visible } = useCreateDiscussion();
 </script>
 
 <style lang="scss" scoped></style>
 <template>
     <FixedFormWrapper v-if="visible">
         <template v-slot:header>
-            <h1 class="text-lg font-medium">New discussion</h1>
+            <div class="flex items-center justify-between">
+                <h1 class="text-lg font-medium">New discussion</h1>
+                <button v-on:click="hideCreateDiscussionForm">&times;</button>
+            </div>
         </template>
 
         <template v-slot:main>
