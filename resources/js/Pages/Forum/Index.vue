@@ -9,6 +9,7 @@ import Navigation from '@/Components/Forum/Navigation.vue';
 import _omitBy from 'lodash.omitby';
 import _isEmpty from 'lodash.isempty';
 import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const { discussions, query } = defineProps({
     discussions: Object,
@@ -68,6 +69,11 @@ const filterTopic = (e) => {
         </div>
 
         <template #side>
+            <PrimaryButton
+                v-on:click="showCreateDiscussionForm"
+                class="flex h-10 w-full justify-center"
+                >Start a discussion
+            </PrimaryButton>
             <Navigation :query="query" />
         </template>
     </ForumLayout>

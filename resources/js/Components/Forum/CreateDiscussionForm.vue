@@ -5,11 +5,14 @@ import TextInput from '@/Components/TextInput.vue';
 import Select from '@/Components/Select.vue';
 import Textarea from '@/Components/Textarea.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
+
+const { visible } = useCreateDiscussion();
 </script>
 
 <style lang="scss" scoped></style>
 <template>
-    <FixedFormWrapper>
+    <FixedFormWrapper v-if="visible">
         <template v-slot:header>
             <h1 class="text-lg font-medium">New discussion</h1>
         </template>
