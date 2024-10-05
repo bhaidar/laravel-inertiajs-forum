@@ -8,11 +8,14 @@ import Pagination from '@/Components/Forum/Pagination.vue';
 import Navigation from '@/Components/Forum/Navigation.vue';
 import _omitBy from 'lodash.omitby';
 import _isEmpty from 'lodash.isempty';
+import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
 
 const { discussions, query } = defineProps({
     discussions: Object,
     query: Object,
 });
+
+const { showCreateDiscussionForm, visible } = useCreateDiscussion();
 
 const filterTopic = (e) => {
     router.visit('/', {
