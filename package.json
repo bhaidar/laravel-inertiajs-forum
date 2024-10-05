@@ -27,6 +27,8 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "lodash.isempty": "^4.4.0",
+        "lodash.omitby": "^4.6.0",
         "pluralize": "^8.0.0",
         "qs": "^6.13.0"
     }
