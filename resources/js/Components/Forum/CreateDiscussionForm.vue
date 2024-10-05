@@ -6,8 +6,9 @@ import Select from '@/Components/Select.vue';
 import Textarea from '@/Components/Textarea.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
+import InputError from '@/Components/InputError.vue';
 
-const { hideCreateDiscussionForm, visible } = useCreateDiscussion();
+const { form, hideCreateDiscussionForm, visible } = useCreateDiscussion();
 </script>
 
 <style lang="scss" scoped></style>
@@ -26,28 +27,42 @@ const { hideCreateDiscussionForm, visible } = useCreateDiscussion();
                     <div>
                         <InputLabel for="title" value="Title" class="sr-only" />
 
-                        <TextInput id="title" type="text" class="w-full" />
+                        <TextInput
+                            id="title"
+                            type="text"
+                            class="w-full"
+                            v-model="form.title"
+                            placeholder="Discussion title"
+                        />
 
-                        <!--                        <InputError class="mt-2" :message="form.errors.email" />-->
+                        <InputError class="mt-2" :message="form.errors.title" />
                     </div>
                 </div>
                 <div>
                     <InputLabel for="topic" value="Topic" class="sr-only" />
-                    <Select id="topic">
+                    <Select id="topic" v-model="form.topic_id">
                         <option value="">Choose a topic</option>
                         <option
-                            :value="topic.slug"
+                            :value="topic.id"
                             v-for="topic in $page.props.topics"
                             :key="topic.id"
                         >
                             {{ topic.name }}
                         </option>
                     </Select>
+                    <InputError class="mt-2" :message="form.errors.topic_id" />
                 </div>
             </div>
 
             <div class="mt-4">
-                <Textarea class="w-full" rows="6" />
+                <InputLabel for="body" value="Body" class="sr-only" />
+                <Textarea
+                    id="body"
+                    class="w-full"
+                    rows="6"
+                    v-model="form.body"
+                />
+                <InputError class="mt-2" :message="form.errors.body" />
             </div>
         </template>
 

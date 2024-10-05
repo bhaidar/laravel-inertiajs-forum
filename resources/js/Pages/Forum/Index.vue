@@ -16,7 +16,7 @@ const { discussions, query } = defineProps({
     query: Object,
 });
 
-const { showCreateDiscussionForm, visible } = useCreateDiscussion();
+const { form, showCreateDiscussionForm, visible } = useCreateDiscussion();
 
 const filterTopic = (e) => {
     router.visit('/', {
@@ -63,6 +63,8 @@ const filterTopic = (e) => {
                         :key="discussion.id"
                         :discussion="discussion"
                     />
+
+                    {{ form }}
                     <Pagination :pagination="discussions.meta" />
                 </template>
             </div>
