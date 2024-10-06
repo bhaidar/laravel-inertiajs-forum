@@ -9,11 +9,20 @@ import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
 import InputError from '@/Components/InputError.vue';
 
 const { form, hideCreateDiscussionForm, visible } = useCreateDiscussion();
+
+const createDiscussion = () => {
+    form.post(route('discussions.store'), {
+        onSuccess: () => {
+            form.reset();
+            hideCreateDiscussionForm();
+        },
+    });
+};
 </script>
 
 <style lang="scss" scoped></style>
 <template>
-    <FixedFormWrapper v-if="visible">
+    <FixedFormWrapper v-if="visible" v-on:submit.prevent="createDiscussion">
         <template v-slot:header>
             <div class="flex items-center justify-between">
                 <h1 class="text-lg font-medium">New discussion</h1>
@@ -67,7 +76,7 @@ const { form, hideCreateDiscussionForm, visible } = useCreateDiscussion();
         </template>
 
         <template v-slot:button>
-            <PrimaryButton> Create discussion</PrimaryButton>
+            <PrimaryButton> Start discussion</PrimaryButton>
         </template>
     </FixedFormWrapper>
 </template>

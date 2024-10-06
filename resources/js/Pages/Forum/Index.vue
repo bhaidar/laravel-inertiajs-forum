@@ -10,6 +10,7 @@ import _omitBy from 'lodash.omitby';
 import _isEmpty from 'lodash.isempty';
 import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import { ref } from 'vue';
 
 const { discussions, query } = defineProps({
     discussions: Object,
@@ -17,6 +18,8 @@ const { discussions, query } = defineProps({
 });
 
 const { form, showCreateDiscussionForm, visible } = useCreateDiscussion();
+
+const selectedTopic = ref('');
 
 const filterTopic = (e) => {
     router.visit('/', {
@@ -28,6 +31,7 @@ const filterTopic = (e) => {
             _isEmpty, // if the property value is empty
         ),
         preserveScroll: true,
+        preserveState: true,
     });
 };
 </script>
@@ -41,17 +45,22 @@ const filterTopic = (e) => {
                 <div class="p-6 text-gray-900">
                     <div>
                         <InputLabel for="topic" value="Topic" class="sr-only" />
-                        <Select id="topic" v-on:change="filterTopic">
+                        <Select
+                            id="topic"
+                            v-on:change="filterTopic"
+                            v-model="selectedTopic"
+                        >
                             <option value="">All topics</option>
                             <option
                                 :value="topic.slug"
                                 v-for="topic in $page.props.topics"
                                 :key="topic.id"
-                                :selected="query.filter?.topic === topic.slug"
+                                :selected="selectedTopic === topic.slug"
                             >
                                 {{ topic.name }}
                             </option>
                         </Select>
+                        <!-- query.filter?.topic -->
                     </div>
                 </div>
             </div>
@@ -63,8 +72,6 @@ const filterTopic = (e) => {
                         :key="discussion.id"
                         :discussion="discussion"
                     />
-
-                    {{ form }}
                     <Pagination :pagination="discussions.meta" />
                 </template>
             </div>

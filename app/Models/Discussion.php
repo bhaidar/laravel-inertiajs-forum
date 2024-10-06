@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 class Discussion extends Model
 {
@@ -18,6 +19,20 @@ class Discussion extends Model
         'slug',
         'pinned_at',
     ];
+
+    protected static function booted(): void
+    {
+        static::created(function ($discussion) {
+            $discussion->update([
+                'slug' => $discussion->title, // This trigger the slug attribute below
+            ]);
+        });
+    }
+
+    public function setSlugAttribute($value): void
+    {
+        $this->attributes['slug'] = $this->id.'-'.Str::slug($value);
+    }
 
     public function scopeOrderByPinned($query): void
     {

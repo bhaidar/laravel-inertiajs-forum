@@ -1,5 +1,5 @@
 <template>
-    <div
+    <form
         class="fixed bottom-0 w-full space-y-3 border-t-4 border-gray-100 bg-white p-6"
     >
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </template>
 
 <script setup></script>
