@@ -16,7 +16,7 @@ const { query } = defineProps({
                             href="/"
                             :class="{
                                 'font-bold':
-                                    !query.filter &&
+                                    !query?.filter &&
                                     $page.component === 'Forum/Index',
                             }"
                             >All discussions
@@ -25,7 +25,7 @@ const { query } = defineProps({
                     <li>
                         <Link
                             href="/?filter[noreplies]=1"
-                            :class="{ 'font-bold': query.filter?.noreplies }"
+                            :class="{ 'font-bold': query?.filter?.noreplies }"
                             >No replies
                         </Link>
                     </li>
@@ -37,7 +37,7 @@ const { query } = defineProps({
                     <li>
                         <Link
                             href="/?filter[mine]=1"
-                            :class="{ 'font-bold': query.filter?.mine }"
+                            :class="{ 'font-bold': query?.filter?.mine }"
                             >My discussions
                         </Link>
                     </li>

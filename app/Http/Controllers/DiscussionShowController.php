@@ -15,6 +15,7 @@ class DiscussionShowController extends Controller
         $discussion->loadCount(['replies']);
 
         return inertia()->render('Forum/Show', [
+            'query' => (object) $request->query(),
             'discussion' => DiscussionResource::make($discussion),
             'posts' => PostResource::collection(
                 $discussion->posts()
