@@ -20,9 +20,12 @@ const createDiscussion = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
 <template>
-    <FixedFormWrapper v-if="visible" v-on:submit.prevent="createDiscussion">
+    <FixedFormWrapper
+        v-if="visible"
+        v-on:submit.prevent="createDiscussion"
+        :form="form"
+    >
         <template v-slot:header>
             <div class="flex items-center justify-between">
                 <h1 class="text-lg font-medium">New discussion</h1>
@@ -71,10 +74,6 @@ const createDiscussion = () => {
                     v-model="form.body"
                     v-if="!markdownPreviewEnabled"
                 />
-                <div
-                    v-if="markdownPreviewEnabled"
-                    class="h-48 overflow-y-scroll rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 shadow-sm"
-                ></div>
                 <InputError class="mt-2" :message="form.errors.body" />
             </div>
         </template>

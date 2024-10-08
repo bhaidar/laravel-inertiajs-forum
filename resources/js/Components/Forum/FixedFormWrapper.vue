@@ -1,7 +1,36 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+
+const { form } = defineProps({
+    form: Object,
+});
 
 const markdownPreviewEnabled = ref(false);
+const markdownPreviewHtml = ref('');
+const markdownPreviewLoading = ref(false);
+
+watch(markdownPreviewEnabled, async (toggled) => {
+    if (!toggled) {
+        markdownPreviewHtml.value = '';
+        return;
+    }
+
+    markdownPreviewLoading.value = true;
+
+    // Send a POST request to /markdown to convert the Markdown text to HTML using axios
+    try {
+        const response = await axios.post(route('markdown.preview'), {
+            body: form.body,
+        });
+
+        // Update the markdownPreviewHtml ref with the converted HTML
+        markdownPreviewHtml.value = response.data.html;
+    } catch (error) {
+        console.error('Error converting Markdown to HTML:', error);
+    } finally {
+        markdownPreviewLoading.value = false;
+    }
+});
 </script>
 
 <template>
@@ -17,6 +46,14 @@ const markdownPreviewEnabled = ref(false);
                     name="main"
                     :markdownPreviewEnabled="markdownPreviewEnabled"
                 />
+
+                <div
+                    v-if="markdownPreviewEnabled"
+                    class="h-48 overflow-y-scroll rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 shadow-sm"
+                    :class="{ 'opacity-50': markdownPreviewLoading }"
+                    v-html="markdownPreviewHtml"
+                ></div>
+
                 <div class="flex items-center justify-between">
                     <div>markdown toolbar</div>
                     <div>

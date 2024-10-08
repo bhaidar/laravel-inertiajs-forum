@@ -6,10 +6,10 @@
     @apply mb-2;
 }
 
-.markdown code {
+code {
     @apply whitespace-pre-wrap leading-loose;
 }
 
-.markdown .shiki {
+.shiki {
     @apply p-6 rounded-lg my-4 text-sm;
 }
