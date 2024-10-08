@@ -5,12 +5,16 @@ import Post from '@/Components/Forum/Post.vue';
 import Pagination from '@/Components/Forum/Pagination.vue';
 import pluralize from 'pluralize';
 import Navigation from '@/Components/Forum/Navigation.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import useCreatePost from '@/Composables/useCreatePost.js';
 
 const { discussion, posts } = defineProps({
     discussion: Object,
     posts: Object,
     query: Object,
 });
+
+const { form, showCreatePostForm, visible } = useCreatePost();
 </script>
 
 <template>
@@ -48,6 +52,12 @@ const { discussion, posts } = defineProps({
         </div>
 
         <template #side>
+            <PrimaryButton
+                v-on:click="showCreatePostForm(discussion)"
+                class="flex h-10 w-full justify-center"
+                v-if="$page.props.auth.user"
+                >Reply to discussion
+            </PrimaryButton>
             <Navigation :query="query" />
         </template>
     </ForumLayout>

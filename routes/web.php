@@ -16,6 +16,7 @@ Route::post('/markdown', MarkdownPreviewController::class)->name('markdown.previ
 
 Route::middleware('auth')->group(function () {
     Route::post('/discussions', DiscussionStoreController::class)->name('discussions.store');
+    Route::post('/posts', DiscussionStoreController::class)->name('discussions.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

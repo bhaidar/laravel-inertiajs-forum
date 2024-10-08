@@ -81,6 +81,7 @@ const filterTopic = (e) => {
             <PrimaryButton
                 v-on:click="showCreateDiscussionForm"
                 class="flex h-10 w-full justify-center"
+                v-if="$page.props.auth.user"
                 >Start a discussion
             </PrimaryButton>
             <Navigation :query="query" />
