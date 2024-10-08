@@ -55,7 +55,7 @@ const { form, showCreatePostForm, visible } = useCreatePost();
             <PrimaryButton
                 v-on:click="showCreatePostForm(discussion)"
                 class="flex h-10 w-full justify-center"
-                v-if="$page.props.auth.user"
+                v-if="discussion.user_can.reply"
                 >Reply to discussion
             </PrimaryButton>
             <Navigation :query="query" />

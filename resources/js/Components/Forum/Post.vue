@@ -1,7 +1,11 @@
 <script setup>
+import useCreatePost from '@/Composables/useCreatePost.js';
+
 const { post } = defineProps({
     post: Object,
 });
+
+const { showCreatePostForm } = useCreatePost();
 </script>
 
 <template>
@@ -34,6 +38,18 @@ const { post } = defineProps({
             <div class="mt-3">
                 <div v-html="post.body_markdown" class="markdown" />
             </div>
+
+            <ul class="mt-6 flex items-center space-x-3">
+                <li v-if="post.discussion.user_can.reply">
+                    <button
+                        type="button"
+                        v-on:click="showCreatePostForm(post.discussion)"
+                        class="text-sm text-indigo-500"
+                    >
+                        Reply
+                    </button>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
