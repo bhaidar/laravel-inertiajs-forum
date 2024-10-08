@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue';
+import MarkdownShortcutToolbar from '@/Components/Forum/MarkdownShortcutToolbar.vue';
 
 const { form } = defineProps({
     form: Object,
@@ -55,7 +56,7 @@ watch(markdownPreviewEnabled, async (toggled) => {
                 ></div>
 
                 <div class="flex items-center justify-between">
-                    <div>markdown toolbar</div>
+                    <MarkdownShortcutToolbar for="body" />
                     <div>
                         <button
                             type="button"
