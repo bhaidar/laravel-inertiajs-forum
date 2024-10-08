@@ -30,7 +30,7 @@ const createDiscussion = () => {
             </div>
         </template>
 
-        <template v-slot:main>
+        <template v-slot:main="{ markdownPreviewEnabled }">
             <div class="flex items-start space-x-3">
                 <div class="flex-grow">
                     <div>
@@ -67,10 +67,14 @@ const createDiscussion = () => {
                 <InputLabel for="body" value="Body" class="sr-only" />
                 <Textarea
                     id="body"
-                    class="w-full"
-                    rows="6"
+                    class="h-48 w-full align-top"
                     v-model="form.body"
+                    v-if="!markdownPreviewEnabled"
                 />
+                <div
+                    v-if="markdownPreviewEnabled"
+                    class="h-48 overflow-y-scroll rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 shadow-sm"
+                ></div>
                 <InputError class="mt-2" :message="form.errors.body" />
             </div>
         </template>
