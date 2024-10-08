@@ -10,7 +10,7 @@ import useCreatePost from '@/Composables/useCreatePost.js';
 const { discussion, form, hideCreatePostForm, visible } = useCreatePost();
 
 const createPost = () => {
-    form.post(route('posts.store'), {
+    form.post(route('posts.store', discussion.value), {
         onSuccess: () => {
             form.reset();
             hideCreatePostForm();
