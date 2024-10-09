@@ -10,6 +10,7 @@ const { showCreatePostForm } = useCreatePost();
 
 <template>
     <div
+        :id="`post-${post.id}`"
         class="flex items-start space-x-3 overflow-hidden bg-white p-6 text-gray-900 shadow-sm sm:rounded-lg"
     >
         <div class="w-7 flex-shrink-0">

@@ -25,7 +25,7 @@ class ForumIndexController extends Controller
                     ->withCount('replies')
                     ->orderByPinned()
                     ->orderByLastPost()
-                    ->paginate(5)
+                    ->paginate(3)
                     ->appends($request->query())
             ),
         ]);

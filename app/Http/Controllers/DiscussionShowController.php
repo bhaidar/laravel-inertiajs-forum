@@ -9,8 +9,19 @@ use Illuminate\Http\Request;
 
 class DiscussionShowController extends Controller
 {
+    protected const MAX_POSTS_PER_PAGE = 3;
+
     public function __invoke(Request $request, Discussion $discussion)
     {
+
+        if ($postId = $request->input('post')) {
+            return redirect()->route('discussions.show', [
+                'discussion' => $discussion,
+                'page' => $this->getPageForPost($discussion, $postId),
+                'postId' => $postId,
+            ]);
+        }
+
         $discussion->load(['topic', 'posts']);
         $discussion->loadCount(['replies']);
 
@@ -21,8 +32,15 @@ class DiscussionShowController extends Controller
                 $discussion->posts()
                     ->with(['user'])
                     ->oldest() // latest posts at the bottom
-                    ->paginate(10)
+                    ->paginate(self::MAX_POSTS_PER_PAGE)
             ),
         ]);
+    }
+
+    protected function getPageForPost(Discussion $discussion, mixed $postId)
+    {
+        $index = $discussion->posts->search(fn ($post) => $post->id == $postId);
+
+        return (int) ceil(($index + 1) / self::MAX_POSTS_PER_PAGE);
     }
 }

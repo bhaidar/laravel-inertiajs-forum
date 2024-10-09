@@ -36,7 +36,7 @@ const moreParticipants = computed(() => discussion.participants.length - 3);
                 </div>
                 <template v-if="discussion.latest_post">
                     <Link
-                        :href="route('discussions.show', discussion)"
+                        :href="`${route('discussions.show', discussion)}?post=${discussion.latest_post.id}`"
                         class="mt-3 inline-block text-sm"
                     >
                         Last post by
