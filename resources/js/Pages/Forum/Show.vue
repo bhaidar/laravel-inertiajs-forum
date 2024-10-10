@@ -1,20 +1,34 @@
 <script setup>
+import { onMounted, onUpdated } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import ForumLayout from '@/Layouts/ForumLayout.vue';
 import Post from '@/Components/Forum/Post.vue';
 import Pagination from '@/Components/Forum/Pagination.vue';
-import pluralize from 'pluralize';
 import Navigation from '@/Components/Forum/Navigation.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import useCreatePost from '@/Composables/useCreatePost.js';
+import VueScrollTo from 'vue-scrollto';
+import pluralize from 'pluralize';
 
-const { discussion, posts } = defineProps({
+const { discussion, posts, postId } = defineProps({
     discussion: Object,
     posts: Object,
+    postId: Number,
     query: Object,
 });
 
 const { form, showCreatePostForm, visible } = useCreatePost();
+
+onMounted(() => scrollToPost(postId));
+onUpdated(() => scrollToPost(postId));
+
+const scrollToPost = (postId) => {
+    if (!postId) {
+        return;
+    }
+
+    VueScrollTo.scrollTo(`#post-${postId}`, 500, { offset: -60 });
+};
 </script>
 
 <template>

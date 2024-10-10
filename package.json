@@ -34,6 +34,7 @@
         "lodash.omitby": "^4.6.0",
         "pluralize": "^8.0.0",
         "qs": "^6.13.0",
-        "shiki": "^1.22.0"
+        "shiki": "^1.22.0",
+        "vue-scrollto": "^2.20.0"
     }
 }
