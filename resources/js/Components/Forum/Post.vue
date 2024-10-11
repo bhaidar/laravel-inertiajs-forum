@@ -17,6 +17,14 @@ const editing = ref(false);
 const editForm = useForm({
     body: post.body,
 });
+const editPost = () => {
+    editForm.patch(route('posts.patch', post), {
+        onSuccess: () => {
+            editing.value = false;
+        },
+        preserveScroll: true,
+    });
+};
 </script>
 
 <template>
@@ -48,7 +56,7 @@ const editForm = useForm({
                 </div>
             </div>
             <div class="mt-3">
-                <form v-if="editing">
+                <form v-if="editing" v-on:submit.prevent="editPost">
                     <InputLabel for="body" value="Body" class="sr-only" />
                     <Textarea
                         id="body"
