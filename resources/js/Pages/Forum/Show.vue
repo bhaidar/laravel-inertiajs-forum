@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, onUpdated } from 'vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import ForumLayout from '@/Layouts/ForumLayout.vue';
 import Post from '@/Components/Forum/Post.vue';
 import Pagination from '@/Components/Forum/Pagination.vue';
@@ -21,6 +21,14 @@ const { form, showCreatePostForm, visible } = useCreatePost();
 
 onMounted(() => scrollToPost(postId));
 onUpdated(() => scrollToPost(postId));
+
+const deleteDiscussion = () => {
+    if (window.confirm('Are you sure you want to delete this discussion?')) {
+        router.delete(route('discussions.destroy', discussion), {
+            preserveScroll: true,
+        });
+    }
+};
 
 const scrollToPost = (postId) => {
     if (!postId) {
@@ -52,6 +60,17 @@ const scrollToPost = (postId) => {
                             </template>
                             {{ discussion.title }}
                         </h1>
+                        <ul class="flex items-center space-x-3">
+                            <li v-if="discussion.user_can.delete">
+                                <button
+                                    type="button"
+                                    class="text-sm text-indigo-500"
+                                    v-on:click="deleteDiscussion"
+                                >
+                                    Delete
+                                </button>
+                            </li>
+                        </ul>
                     </div>
                     <div class="text-sm text-gray-600">
                         {{ pluralize('reply', discussion.replies_count, true) }}

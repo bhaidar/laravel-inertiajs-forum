@@ -27,7 +27,7 @@ const editPost = () => {
 };
 const deletePost = () => {
     if (window.confirm('Are you sure you want to delete this post?')) {
-        router.delete(route('posts.delete', post), {
+        router.delete(route('posts.destroy', post), {
             preserveScroll: true,
         });
     }
