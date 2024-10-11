@@ -1,6 +1,6 @@
 <script setup>
 import useCreatePost from '@/Composables/useCreatePost.js';
-import { useForm } from '@inertiajs/vue3';
+import { router, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import InputError from '@/Components/InputError.vue';
 import Textarea from '@/Components/Textarea.vue';
@@ -24,6 +24,13 @@ const editPost = () => {
         },
         preserveScroll: true,
     });
+};
+const deletePost = () => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+        router.delete(route('posts.delete', post), {
+            preserveScroll: true,
+        });
+    }
 };
 </script>
 
@@ -95,6 +102,15 @@ const editPost = () => {
                         class="text-sm text-indigo-500"
                     >
                         Edit
+                    </button>
+                </li>
+                <li v-if="post.user_can.delete">
+                    <button
+                        v-on:click="deletePost"
+                        type="button"
+                        class="text-sm text-indigo-500"
+                    >
+                        Delete
                     </button>
                 </li>
             </ul>
