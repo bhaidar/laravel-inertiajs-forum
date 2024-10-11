@@ -7,13 +7,23 @@ use App\Models\User;
 
 class DiscussionPolicy
 {
-    public function create(User $user): bool
+    public function create(User $user): true
     {
         return true;
     }
 
-    public function reply(User $user, Discussion $discussion): bool
+    public function reply(User $user, Discussion $discussion): true
     {
         return true;
+    }
+
+    public function delete(User $user, Discussion $discussion): bool
+    {
+        return $user->id === $discussion->user_id;
+    }
+
+    public function solve(User $user, Discussion $discussion): bool
+    {
+        return $user->id === $discussion->user_id;
     }
 }
