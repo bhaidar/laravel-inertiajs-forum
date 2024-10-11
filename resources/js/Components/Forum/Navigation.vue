@@ -50,6 +50,24 @@ const { query } = defineProps({
                             >Participating
                         </Link>
                     </li>
+                    <li>
+                        <Link
+                            href="/?filter[solved]=1"
+                            :class="{
+                                'font-bold': query.filter?.solved,
+                            }"
+                            >Solved
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            href="/?filter[unsolved]=1"
+                            :class="{
+                                'font-bold': query.filter?.solved,
+                            }"
+                            >Unsolved
+                        </Link>
+                    </li>
                 </ul>
             </nav>
         </div>
