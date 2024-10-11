@@ -7,8 +7,9 @@ import Textarea from '@/Components/Textarea.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
-const { post } = defineProps({
+const { post, isSolution } = defineProps({
     post: Object,
+    isSolution: Boolean,
 });
 
 const { showCreatePostForm } = useCreatePost();
@@ -32,12 +33,27 @@ const deletePost = () => {
         });
     }
 };
+const markBestSolution = () => {
+    router.patch(
+        route('discussions.solution.patch', post.discussion),
+        {
+            post_id: isSolution ? null : post.id,
+        },
+        {
+            preserveScroll: true,
+        },
+    );
+};
 </script>
 
 <template>
     <div
         :id="`post-${post.id}`"
-        class="flex items-start space-x-3 overflow-hidden bg-white p-6 text-gray-900 shadow-sm sm:rounded-lg"
+        class="relative flex items-start space-x-3 overflow-hidden border-2 bg-white p-6 text-gray-900 shadow-sm sm:rounded-lg"
+        :class="{
+            'border-gray-800': isSolution,
+            'border-transparent': !isSolution,
+        }"
     >
         <div class="w-7 flex-shrink-0">
             <img
@@ -114,11 +130,21 @@ const deletePost = () => {
                     </button>
                 </li>
                 <li v-if="post.discussion.user_can.solve">
-                    <button type="button" class="text-sm text-indigo-500">
-                        Mark best solution
+                    <button
+                        v-on:click="markBestSolution"
+                        type="button"
+                        class="text-sm text-indigo-500"
+                    >
+                        {{ isSolution ? 'Unmark' : 'Mark' }} Best answer
                     </button>
                 </li>
             </ul>
+        </div>
+        <div
+            v-if="isSolution"
+            class="absolute right-0 top-0 rounded-bl bg-gray-800 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-100 shadow-sm"
+        >
+            Best solution
         </div>
     </div>
 </template>

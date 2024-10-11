@@ -79,7 +79,12 @@ const scrollToPost = (postId) => {
             </div>
 
             <template v-if="posts.data.length">
-                <Post v-for="post in posts.data" :key="post.id" :post="post" />
+                <Post
+                    v-for="post in posts.data"
+                    :key="post.id"
+                    :post="post"
+                    :is-solution="discussion.solution?.id === post.id"
+                />
                 <Pagination :pagination="posts.meta" />
             </template>
         </div>
