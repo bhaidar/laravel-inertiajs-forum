@@ -113,6 +113,11 @@ const deletePost = () => {
                         Delete
                     </button>
                 </li>
+                <li v-if="post.discussion.user_can.solve">
+                    <button type="button" class="text-sm text-indigo-500">
+                        Mark best solution
+                    </button>
+                </li>
             </ul>
         </div>
     </div>

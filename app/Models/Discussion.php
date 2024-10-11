@@ -113,4 +113,9 @@ class Discussion extends Model
             'user_id'
         )->distinct();
     }
+
+    public function solution(): BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'solution_post_id');
+    }
 }

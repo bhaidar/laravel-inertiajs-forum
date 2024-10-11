@@ -22,7 +22,7 @@ class DiscussionShowController extends Controller
             ]);
         }
 
-        $discussion->load(['topic', 'posts']);
+        $discussion->load(['topic', 'posts', 'solution']);
         $discussion->loadCount(['replies']);
 
         return inertia()->render('Forum/Show', [
