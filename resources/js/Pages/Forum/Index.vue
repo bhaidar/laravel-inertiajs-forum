@@ -9,6 +9,7 @@ import Pagination from '@/Components/Forum/Pagination.vue';
 import Navigation from '@/Components/Forum/Navigation.vue';
 import _omitBy from 'lodash.omitby';
 import _isEmpty from 'lodash.isempty';
+import _debounce from 'lodash.debounce';
 import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
@@ -22,14 +23,18 @@ const searchQuery = ref(query.search ?? '');
 const selectedTopic = ref('');
 const { form, showCreateDiscussionForm, visible } = useCreateDiscussion();
 
-watch(searchQuery, () => {
-    console.log('Search query changed:', searchQuery.value);
+const handleSearch = _debounce((search) => {
     router.reload({
         data: {
-            search: searchQuery.value,
+            search,
         },
         preserveScroll: true,
     });
+}, 500);
+
+watch(searchQuery, () => {
+    console.log('Search query changed:', searchQuery.value);
+    handleSearch(searchQuery.value);
 });
 
 const filterTopic = (e) => {
