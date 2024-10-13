@@ -1,7 +1,7 @@
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-const visible = ref(false);
+const visible = ref(true);
 const form = useForm({
     topic_id: '',
     title: '',

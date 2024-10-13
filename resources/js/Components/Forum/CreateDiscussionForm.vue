@@ -8,6 +8,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
 import InputError from '@/Components/InputError.vue';
 import Svg from '@/Components/Svg.vue';
+import { Mentionable } from 'vue-mention';
 
 const { form, hideCreateDiscussionForm, visible } = useCreateDiscussion();
 
@@ -71,12 +72,23 @@ const createDiscussion = () => {
 
             <div class="mt-4">
                 <InputLabel for="body" value="Body" class="sr-only" />
-                <Textarea
-                    id="body"
-                    class="h-48 w-full align-top"
-                    v-model="form.body"
-                    v-if="!markdownPreviewEnabled"
-                />
+                <Mentionable
+                    :keys="['@']"
+                    offset="6"
+                    :items="[
+                        {
+                            label: 'Alex (@alex)',
+                            value: 'alex',
+                        },
+                    ]"
+                >
+                    <Textarea
+                        id="body"
+                        class="h-48 w-full align-top"
+                        v-model="form.body"
+                        v-if="!markdownPreviewEnabled"
+                    />
+                </Mentionable>
                 <InputError class="mt-2" :message="form.errors.body" />
             </div>
         </template>

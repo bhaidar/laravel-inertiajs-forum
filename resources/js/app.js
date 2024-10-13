@@ -7,6 +7,7 @@ import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 import '@github/markdown-toolbar-element';
+import 'floating-vue/dist/style.css';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
