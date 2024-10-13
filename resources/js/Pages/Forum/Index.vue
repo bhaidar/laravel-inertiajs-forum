@@ -1,4 +1,5 @@
 <script setup>
+import { ref, watch } from 'vue';
 import { Head, router } from '@inertiajs/vue3';
 import ForumLayout from '@/Layouts/ForumLayout.vue';
 import Select from '@/Components/Select.vue';
@@ -10,16 +11,26 @@ import _omitBy from 'lodash.omitby';
 import _isEmpty from 'lodash.isempty';
 import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { ref } from 'vue';
+import TextInput from '@/Components/TextInput.vue';
 
 const { discussions, query } = defineProps({
     discussions: Object,
     query: Object,
 });
 
+const searchQuery = ref(query.search ?? '');
+const selectedTopic = ref('');
 const { form, showCreateDiscussionForm, visible } = useCreateDiscussion();
 
-const selectedTopic = ref('');
+watch(searchQuery, () => {
+    console.log('Search query changed:', searchQuery.value);
+    router.reload({
+        data: {
+            search: searchQuery.value,
+        },
+        preserveScroll: true,
+    });
+});
 
 const filterTopic = (e) => {
     router.visit('/', {
@@ -42,7 +53,21 @@ const filterTopic = (e) => {
     <ForumLayout>
         <div class="space-y-6">
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+                <div class="flex items-center space-x-3 p-6 text-gray-900">
+                    <div class="flex-grow">
+                        <InputLabel
+                            for="search"
+                            value="Search"
+                            class="sr-only"
+                        />
+                        <TextInput
+                            id="search"
+                            v-model="searchQuery"
+                            type="search"
+                            class="block w-full"
+                            required
+                        />
+                    </div>
                     <div>
                         <InputLabel for="topic" value="Topic" class="sr-only" />
                         <Select

@@ -27,6 +27,15 @@ class ForumIndexController extends Controller
                     ->withCount('replies')
                     ->orderByPinned()
                     ->orderByLastPost()
+                    ->tap(function ($builder) use ($request) {
+                        if (filled($request->search)) {
+                            $models = Discussion::search($request->search)->get();
+
+                            return $builder->whereIn('id', $models->pluck('id'));
+                        }
+
+                        return $builder;
+                    })
                     ->paginate(3)
                     ->appends($request->query())
             ),
