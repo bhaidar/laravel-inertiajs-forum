@@ -1,4 +1,5 @@
 <script setup>
+import { Mentionable } from 'vue-mention';
 import FixedFormWrapper from '@/Components/Forum/FixedFormWrapper.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
@@ -6,11 +7,12 @@ import Select from '@/Components/Select.vue';
 import Textarea from '@/Components/Textarea.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
+import useMentionSearch from '@/Composables/useMentionSearch.js';
 import InputError from '@/Components/InputError.vue';
 import Svg from '@/Components/Svg.vue';
-import { Mentionable } from 'vue-mention';
 
 const { form, hideCreateDiscussionForm, visible } = useCreateDiscussion();
+const { mentionSearch, mentionSearchResults } = useMentionSearch();
 
 const createDiscussion = () => {
     form.post(route('discussions.store'), {
@@ -75,12 +77,8 @@ const createDiscussion = () => {
                 <Mentionable
                     :keys="['@']"
                     offset="6"
-                    :items="[
-                        {
-                            label: 'Alex (@alex)',
-                            value: 'alex',
-                        },
-                    ]"
+                    v-on:search="mentionSearch"
+                    :items="mentionSearchResults"
                 >
                     <Textarea
                         id="body"
