@@ -12,6 +12,12 @@ use App\Http\Controllers\PostStoreController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
 require __DIR__.'/auth.php';
 
 Route::get('/', ForumIndexController::class)->name('home');
@@ -27,8 +33,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/discussions/{discussion}/posts', PostStoreController::class)->name('posts.store');
     Route::patch('/posts/{post}', PostPatchController::class)->name('posts.patch');
     Route::delete('/posts/{post}', PostDestroyController::class)->name('posts.destroy');
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

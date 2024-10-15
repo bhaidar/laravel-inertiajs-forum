@@ -34,11 +34,6 @@ class Discussion extends Model
     public function toSearchableArray(): array
     {
         return $this->only(['id', 'title']);
-
-        //        return [
-        //            'id' => $this->id,
-        //            'title' => $this->title,
-        //        ];
     }
 
     public function setSlugAttribute($value): void
