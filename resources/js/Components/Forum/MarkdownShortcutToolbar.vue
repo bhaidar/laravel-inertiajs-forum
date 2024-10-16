@@ -16,5 +16,8 @@ import Svg from '@/Components/Svg.vue';
         <md-link class="cursor-pointer px-1 py-1.5">
             <Svg name="icon-link" class="h-5 w-5" />
         </md-link>
+        <md-mention class="cursor-pointer px-1 py-1.5">
+          <Svg name="icon-at" class="h-5 w-5" />
+        </md-mention>
     </markdown-toolbar>
 </template>
