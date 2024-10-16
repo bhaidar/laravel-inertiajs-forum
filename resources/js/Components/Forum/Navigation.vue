@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import {Link} from '@inertiajs/vue3';
 
 const { query } = defineProps({
     query: Object,
@@ -68,6 +68,15 @@ const { query } = defineProps({
                             >Unsolved
                         </Link>
                     </li>
+                  <li>
+                    <Link
+                        href="/?filter[mentioned]=1"
+                        :class="{
+                                'font-bold': query.filter?.mentioned,
+                            }"
+                    >Mentioned
+                    </Link>
+                  </li>
                 </ul>
             </nav>
         </div>
