@@ -105,7 +105,9 @@ const markBestSolution = () => {
                 <li v-if="post.discussion.user_can.reply">
                     <button
                         type="button"
-                        v-on:click="showCreatePostForm(post.discussion)"
+                        v-on:click="
+                            showCreatePostForm(post.discussion, post.user)
+                        "
                         class="text-sm text-indigo-500"
                     >
                         Reply

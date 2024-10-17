@@ -6,8 +6,25 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import InputError from '@/Components/InputError.vue';
 import Svg from '@/Components/Svg.vue';
 import useCreatePost from '@/Composables/useCreatePost.js';
+import { Mentionable } from 'vue-mention';
+import useMentionSearch from '@/Composables/useMentionSearch.js';
+import { onUpdated, ref, watch } from 'vue';
 
-const { discussion, form, hideCreatePostForm, visible } = useCreatePost();
+const { discussion, form, hideCreatePostForm, user, visible } = useCreatePost();
+const { mentionSearch, mentionSearchResults } = useMentionSearch();
+const bodyRef = ref(null);
+
+watch(user, (newUser) => {
+    if (!newUser) {
+        return;
+    }
+
+    form.body = `@${newUser.username} ${form.body}`;
+});
+
+onUpdated(() => {
+    bodyRef.value?.focus();
+});
 
 const createPost = () => {
     form.post(route('posts.store', discussion.value), {
@@ -39,12 +56,25 @@ const createPost = () => {
         <template v-slot:main="{ markdownPreviewEnabled }">
             <div class="">
                 <InputLabel for="body" value="Body" class="sr-only" />
-                <Textarea
-                    id="body"
-                    class="h-48 w-full align-top"
-                    v-model="form.body"
+                <Mentionable
+                    :keys="['@']"
+                    offset="6"
+                    v-on:search="mentionSearch"
+                    :items="mentionSearchResults"
                     v-if="!markdownPreviewEnabled"
-                />
+                >
+                    <Textarea
+                        id="body"
+                        ref="bodyRef"
+                        class="h-48 w-full align-top"
+                        v-model="form.body"
+                    />
+
+                    <template #no-result>
+                        <div class="mention-item">No username found</div>
+                    </template>
+                </Mentionable>
+
                 <InputError class="mt-2" :message="form.errors.body" />
             </div>
         </template>

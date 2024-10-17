@@ -1,7 +1,7 @@
 import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 
-const visible = ref(true);
+const visible = ref(false);
 const form = useForm({
     topic_id: '',
     title: '',
@@ -11,6 +11,21 @@ const form = useForm({
 export default () => {
     const showCreateDiscussionForm = () => (visible.value = true);
     const hideCreateDiscussionForm = () => (visible.value = false);
+
+    const handleEscKey = (event) => {
+        if (event.key === 'Escape') {
+            hideCreateDiscussionForm();
+        }
+    };
+
+    onMounted(() => {
+        document.addEventListener('keydown', handleEscKey);
+    });
+
+    onUnmounted(() => {
+        document.removeEventListener('keydown', handleEscKey);
+    });
+
     return {
         form,
         hideCreateDiscussionForm,
