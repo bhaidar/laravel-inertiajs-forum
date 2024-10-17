@@ -1,9 +1,12 @@
 import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
-import {defineConfig} from 'vite';
+import { defineConfig } from 'vite';
 import svgLoader from 'vite-svg-loader';
 
 export default defineConfig({
+    ssr: {
+        noExternal: ['vue-mention', 'floating-vue'],
+    },
     plugins: [
         svgLoader({
             svgo: false,
@@ -27,7 +30,7 @@ export default defineConfig({
                             'md-code',
                             'md-italic',
                             'markdown-toolbar',
-                            'md-mention'
+                            'md-mention',
                         ].includes(tag),
                 },
             },

@@ -17,6 +17,7 @@ class PostPolicy
 
     public function delete(User $user, Post $post): bool
     {
+        // Delete any post except the very first post (discussion)
         return $user->id === $post->user_id && ! is_null($post->parent_id);
     }
 }

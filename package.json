@@ -30,7 +30,7 @@
     },
     "dependencies": {
         "@github/markdown-toolbar-element": "^2.2.3",
-        "floating-vue": "^2.0.0-beta.1",
+        "floating-vue": "^2.0.0-beta.20",
         "lodash.debounce": "^4.0.8",
         "lodash.isempty": "^4.4.0",
         "lodash.omitby": "^4.6.0",
