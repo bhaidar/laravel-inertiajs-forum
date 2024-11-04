@@ -1,11 +1,16 @@
 import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 import svgLoader from 'vite-svg-loader';
 
 export default defineConfig({
     ssr: {
-        noExternal: ['vue-mention', 'floating-vue'],
+        noExternal: [
+            'vue-mention',
+            'floating-vue',
+            'vue-scrollto',
+            '@github/markdown-toolbar-element',
+        ]
     },
     plugins: [
         svgLoader({
